@@ -1,0 +1,6 @@
+#ifndef HEADER_GFILE_HXX
+#define HEADER_GFILE_HXX
+
+
+
+#endif // HEADER_GFILE_HXX

@@ -1,0 +1,120 @@
+#==============================================================================
+#                               conkyrc_seamod
+# Date    : 05/02/2012
+# Author  : SeaJey
+# Version : v0.1
+# License : Distributed under the terms of GNU GPL version 2 or later
+# 
+# This version is a modification of conkyrc_lunatico wich is modification of conkyrc_orange
+# 
+# conkyrc_orange:    http://gnome-look.org/content/show.php?content=137503&forumpage=0
+# conkyrc_lunatico:  http://gnome-look.org/content/show.php?content=142884
+#==============================================================================
+
+background yes
+update_interval 2
+
+cpu_avg_samples 1
+net_avg_samples 2
+temperature_unit celsius
+
+double_buffer yes
+no_buffers yes
+text_buffer_size 2048
+override_utf8_locale yes
+use_xft yes
+xftfont caviar dreams:size=10
+xftalpha 0.5
+uppercase no
+
+gap_x 20
+gap_y -50
+
+minimum_size 0 0
+maximum_width 300
+
+own_window yes
+own_window_type normal
+own_window_argb_value 0
+own_window_colour 000000
+own_window_transparent yes
+own_window_argb_visual yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+
+border_inner_margin 0
+border_outer_margin 0
+alignment top_right
+
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# Defining colors
+default_color FFFFFF
+# Shades of Gray
+color1 DDDDDD
+color2 AAAAAA
+color3 888888
+# Orange
+color4 EF5A29
+# Green
+color5 77B753
+
+# Loading lua script for drawning rings
+lua_load ./seamod_rings.lua
+lua_draw_hook_post main
+
+## System information using conky capabilities
+
+TEXT
+${font Ubuntu:size=10,weight:bold}${color4}SYSTEM ${hr 2}
+${offset 15}${font Ubuntu:size=10,weight:normal}${color1}$sysname $kernel $machine
+${offset 15}${font Ubuntu:size=10,weight:normal}${color1}Machine/Engine: $nodename
+${offset 15}${font Ubuntu:size=10,weight:normal}${color1}Uptime: $uptime
+
+# Showing CPU Graph
+${voffset 10}
+${offset 120}${cpugraph 40,183 666666 666666}${voffset -25}
+${offset 90}${font Ubuntu:size=10,weight:bold}${color5}CPU
+# Showing TOP 6 CPU-consumers
+${offset 105}${font Ubuntu:size=10,weight:normal}${color4}${top name 1}${alignr}${top cpu 1}%
+${offset 105}${font Ubuntu:size=10,weight:normal}${color1}${top name 2}${alignr}${top cpu 2}%
+${offset 105}${font Ubuntu:size=10,weight:normal}${color2}${top name 3}${alignr}${top cpu 3}%
+${offset 105}${font Ubuntu:size=10,weight:normal}${color3}${top name 4}${alignr}${top cpu 4}%
+${offset 105}${font Ubuntu:size=10,weight:normal}${color3}${top name 5}${alignr}${top cpu 5}%
+${offset 105}${font Ubuntu:size=10,weight:normal}${color3}${top name 6}${alignr}${top cpu 6}%
+
+# Showing CPU-temperature
+${offset 105}${font Ubuntu:size=10,weight:normal}${color1}Core temp ${color3}${hr 1}
+${offset 105}${font Ubuntu:size=10,weight:normal}${color2}cpu-core-one${alignr}${cpu cpu0}(${execi 8 sensors | grep -A 1 'temp2' | cut -c13-16 | sed '/^$/d'}°C)
+${offset 105}${font Ubuntu:size=10,weight:normal}${color2}cpu-core-two${alignr}${cpu cpu1}(${execi 8 sensors | grep -A 1 'temp2' | cut -c13-16 | sed '/^$/d'}°C)
+${offset 105}${font Ubuntu:size=10,weight:normal}${color2}cpu-load${alignr}$loadavg
+
+# Showing TOP 6 MEM-consumers
+${voffset 4}
+${offset 90}${font Ubuntu:size=10,weight:bold}${color5}MEM
+${offset 105}${font Ubuntu:size=10,weight:normal}${color4}${top_mem name 1}${alignr}${top_mem mem 1}%
+${offset 105}${font Ubuntu:size=10,weight:normal}${color1}${top_mem name 2}${alignr}${top_mem mem 2}%
+${offset 105}${font Ubuntu:size=10,weight:normal}${color2}${top_mem name 3}${alignr}${top_mem mem 3}%
+${offset 105}${font Ubuntu:size=10,weight:normal}${color3}${top_mem name 4}${alignr}${top_mem mem 4}%
+${offset 105}${font Ubuntu:size=10,weight:normal}${color3}${top_mem name 5}${alignr}${top_mem mem 5}%
+${offset 105}${font Ubuntu:size=10,weight:normal}${color3}${top_mem name 6}${alignr}${top_mem mem 6}%
+
+# Showing MAX/FREE MEM
+${offset 105}${font Ubuntu:size=10,weight:normal}${color1}Mem-Usage ${color3}${hr 1}
+${offset 105}${font Ubuntu:size=10,weight:normal}${color3}mem-max-available ${alignr}${memmax}
+${offset 105}${font Ubuntu:size=10,weight:normal}${color3}mem-usage ${alignr}${mem}
+${offset 105}${font Ubuntu:size=10,weight:normal}${color3}mem-swap: ${alignr}$swap/ $swapmax
+
+# Showing disk partitions: root, home and Data
+${offset 90}${font Ubuntu:size=10,weight:bold}${color5}DISK
+${offset 105}${font Ubuntu:size=10,weight:normal}${color3}Linux ${hr 1}
+${offset 105}${font Ubuntu:size=10,weight:normal}${color3}free: ${fs_free /}${alignr}used: ${fs_used /}
+
+${offset 105}${font Ubuntu:size=10,weight:normal}${color3}User ${hr 1}
+${offset 105}${font Ubuntu:size=10,weight:normal}${color3}free: ${fs_free /home}${alignr}used: ${fs_used /home}
+
+${offset 105}${font Ubuntu:size=10,weight:normal}${color3}External ${hr 1}
+${offset 105}${font Ubuntu:size=10,weight:normal}${color3}free: ${fs_free /media/Data}${alignr}used: ${fs_used /media/Data}
